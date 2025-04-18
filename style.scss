@@ -1,0 +1,210 @@
+// Update color variables
+$primary: #62006d;
+$primary-dark: #7a0089;
+$text-color: #1f2937;
+$bg-light: #f9fafb;
+$bg-dark: $primary;  
+$white: #ffffff;
+$gray-border: #e5e7eb;
+
+@mixin button {
+  display: inline-block;
+  background-color: $primary;
+  color: $white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: $primary-dark;
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Amiri', serif;
+}
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  line-height: 1.6;
+  background-color: $bg-light;
+  color: $text-color;
+}
+
+
+$breakpoints: (
+  'mobile-sm': 320px,
+  'mobile': 576px,
+  'tablet': 768px,
+  'desktop': 992px,
+  'desktop-lg': 1200px
+);
+
+@mixin responsive($breakpoint) {
+  @media (max-width: map-get($breakpoints, $breakpoint)) {
+    @content;
+  }
+}
+
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+  padding: 2rem 0;
+
+  @include responsive('tablet') {
+    width: 95%;
+    padding: 1.5rem 0;
+  }
+
+  @include responsive('mobile') {
+    width: 100%;
+    padding: 1rem 0.5rem;
+  }
+}
+
+.navbar {
+  background-color: $primary;  
+  color: $white;
+  padding: 0.5rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  .nav-links {
+    a {
+      &:hover {
+        background-color: $primary-dark;  
+      }
+    }
+  }
+}
+
+.hero {
+  background-color: #ffffff; 
+  text-align: center;
+  padding: 4rem 0;
+
+  h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .btn {
+    margin-top: 1rem;
+    @include button;
+  }
+}
+
+.section {
+  padding: 4rem 0;
+
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+}
+
+.cards {
+  @extend %flex-center;
+  flex-wrap: wrap;
+  gap: map-get($spacing, 'lg');
+  
+  .card {
+    @extend %card-shadow;
+    width: 300px;
+    
+    h3 {
+      color: $text-color;
+      margin-bottom: map-get($spacing, 'sm');
+    }
+    
+    p {
+      color: lighten($text-color, 20%);
+    }
+    
+    i {
+      color: $primary;
+      font-size: rem(48);
+    }
+    
+    &:hover {
+      transform: translateY(-5px);
+    }
+  }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 500px;
+  margin: auto;
+
+  input,
+  textarea {
+    padding: 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+  }
+
+  button {
+    @include button;
+  }
+}
+
+.footer {
+  background-color: $primary;  
+  color: $white;
+  text-align: center;
+  padding: 1rem 0;
+  font-size: 0.9rem;
+}
+
+@mixin mobile {
+  @media (max-width: map-get($breakpoints, 'mobile')) {
+    @content;
+  }
+}
+
+
+@include mobile {
+  .cards {
+    flex-direction: column;
+  }
+}
+
+
+@function rem($pixels) {
+  @return ($pixels / 16) + rem;
+}
+
+
+.hero h2 {
+  font-size: rem(40);
+}
+
+$spacing: (
+  'sm': 0.5rem,
+  'md': 1rem,
+  'lg': 2rem,
+  'xl': 4rem
+);
+
+$breakpoints: (
+  'mobile': 768px,
+  'tablet': 992px,
+  'desktop': 1200px
+);
